@@ -12,7 +12,7 @@ OBJS = $(patsubst src/%.cpp,build/%.o,$(SRCS))
 TARGET = DCPrevent.exe
 
 # Linker flags: user32, shell32, ole32, Unicode Windows GUI
-LDFLAGS = -luser32 -lshell32 -lole32 -municode -mwindows
+LDFLAGS = -municode -mwindows -static -static-libgcc -static-libstdc++ -luser32 -lshell32 -lole32 -pthread
 
 # Default target
 all: build $(TARGET)
@@ -33,3 +33,4 @@ build/%.o: src/%.cpp
 clean:
 	if exist build rd /s /q build
 	if exist $(TARGET) del $(TARGET)
+
