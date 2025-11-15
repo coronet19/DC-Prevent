@@ -4,6 +4,7 @@
 #include <chrono>
 #include <sstream>
 #include <mutex>
+#include <iomanip>
 
 LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION) {
@@ -29,8 +30,12 @@ LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
             }
 
             std::wstringstream ss;
-            ss << (shouldBlock ? L"Suppressed a DC\t" : L"MouseDown\t") 
-               << (isLeft ? L"Left" : L"Right");
+
+            ss << std::left << std::setw(20)   // 20-char padded column
+            << (shouldBlock ? L"DC Suppressed" : L"Mouse Down")
+            << std::setw(10)                // second column
+            << (isLeft ? L"Left" : L"Right");
+
             PostLog(ss.str());
 
             if (shouldBlock) return 1;
